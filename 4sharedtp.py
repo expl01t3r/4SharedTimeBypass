@@ -1,5 +1,9 @@
 import requests
 import re
+import os
+
+
+
 
 
 
@@ -12,28 +16,38 @@ print('''
   /_/ /____/_/ /_/\__,_/_/   \___/\__,_/    /_/ /_/_/ /_/ /_/\___/  /_____/ /_/ .___/\__,_/____/____/  
                                                                              /_/                       
 
+
 ''')
+
 
 def menu():
     op = int(input('''
-1 - Resolver outro link
-2 - Sair
+1 - Resolver 1 link
+2 - Resolver links de um arquivo
+3 - Sair
 Escolha: '''))
     if op == 1:
-        link()
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(link(input('Link a Ser quebrado: ')))
     elif op == 2:
+        arquivo = open(input('Caminho do arquivo com os links\n Ex.: C:\Arquivo.txt : '))
+        for x in arquivo:
+            link(x)
+        menu()
+    elif op == 3:
         exit()
     else:
-        print('OpÃ§Ã£o invalida!')
+        print('Opção invalida!')
         menu()
 
-def link():
-    url=input('url: ')
+
+def link(url):
     url= re.sub('.com/.*?/','.com/get/', url)
     sessao = requests.get(url)
     sessao = requests.get(url, cookies=sessao.cookies)
     reg = re.search('(<input type="hidden" id="baseDownloadLink" value=")(.*?)("/>)', sessao.content.decode('UTF-8'))
     print('\nLink resolvido: {link}\n' .format(link =reg.group(2)))
-    menu()
 
-link()
+
+
+menu()
