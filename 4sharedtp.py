@@ -28,7 +28,7 @@ def menu():
 Escolha: '''))
     if op == 1:
         os.system('cls' if os.name == 'nt' else 'clear')
-        print(link(input('Link a Ser quebrado: ')))
+        link(input('Link a Ser quebrado: '))
     elif op == 2:
         arquivo = open(input('Caminho do arquivo com os links\n Ex.: C:\Arquivo.txt : '))
         for x in arquivo:
